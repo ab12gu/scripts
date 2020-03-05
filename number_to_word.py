@@ -11,6 +11,7 @@ def number_to_word(number):
     """Converts a number to a word"""
 
     import enchant # English Dictionary
+    from itertools import product # Cartesian Product
 
     # Create a dictionary for number to letter conversion
     alph_num_dict = {'2': ('a', 'b', 'c'),
@@ -23,27 +24,28 @@ def number_to_word(number):
                      '9': ('w', 'x', 'y', 'z')}
 
     number = number[4:] # delete area code
-    word = []
+    word = ""
+    d = enchant.Dict("en_US")  # check if word is a real english word
+    perm = list(product('012', repeat=8)) # Find all combinations of numbers
 
-    for index in range(len(number)): # iterate through number and convert each number to a letter
-        p = number[index]
-        word.append(alph_num_dict[p][0])
+    #print(perm[0][1])
+    i = 0
 
+    while(1):
 
-    full_word = ""
-    for element in word: # convert list of letters to single string
-        full_word += element
+        for index in range(len(number)): # iterate through number and convert each number to a letter
+            p = number[index]
+            word += alph_num_dict[p][int(perm[i][index])] # add letter to word
 
-    d = enchant.Dict("en_US") # check if word is a real english word
-    if d.check(full_word):
-        return full_word
-    else:
-        print(full_word)
-        return 'False'
+        if d.check(word):
+            return word
+        else:
+            i += 1
+            word = ""
 
 
 if __name__ == '__main__':
     number = '18007246837' # input number
     word = number_to_word(number)
 
-    return(word)
+    print(word)
