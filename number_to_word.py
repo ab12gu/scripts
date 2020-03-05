@@ -26,7 +26,7 @@ def number_to_word(number):
     number = number[4:] # delete area code
     word = ""
     d = enchant.Dict("en_US")  # check if word is a real english word
-    perm = list(product('012', repeat=8)) # Find all combinations of numbers
+    perm = list(product('012', repeat=7)) # Find all combinations of numbers
 
     #print(perm[0][1])
     i = 0
