@@ -23,29 +23,46 @@ def number_to_word(number):
                      '8': ('t', 'u', 'v'),
                      '9': ('w', 'x', 'y', 'z')}
 
-    number = number[4:] # delete area code
+    # remove unwanted digits
+    number = number[6:] # delete area code
+    number = number[:3] + number[4:] # remove hyphen
+
     word = ""
     d = enchant.Dict("en_US")  # check if word is a real english word
-    perm = list(product('012', repeat=7)) # Find all combinations of numbers
 
-    #print(perm[0][1])
+    # prod = list(product('012', repeat=7)) # Find all combinations of numbers (old cartesian product)
+    temp = []
+    prod = []
+    # Find all combination of numbers
+    for index in range(len(number)):
+        if number[index] in ['9', '7']:
+            temp.append([0,1,2,3])
+        else:
+            temp.append([0,1,2])
+
+    for i in product(*temp):
+        prod.append((i))
+
+    # print(perm[0][1])
     i = 0
 
     while(1):
 
         for index in range(len(number)): # iterate through number and convert each number to a letter
             p = number[index]
-            word += alph_num_dict[p][int(perm[i][index])] # add letter to word
+            word += alph_num_dict[p][int(prod[i][index])] # add letter to word
 
         if d.check(word):
-            return word
+            return '1-800-' + word
         else:
             i += 1
             word = ""
 
 
 if __name__ == '__main__':
-    number = '18007246837' # input number
+    number = '1-800-724-6837' # input number
+    # number = input("Enter your phone number: ")
+
     word = number_to_word(number)
 
     print(word)
