@@ -1,11 +1,14 @@
 ###
 # filename: word_to_number.py
 #
+# date: 03-05-20
 # by: Abhay Gupta
 # desc: Converts word to phone number
 ###
 
+
 def word_to_number(word):
+    """Converts a word to a number"""
 
     # create dictionary for letter to telephone number
     alph_num_dict = {'a': '2', 'b': '2', 'c': '2',

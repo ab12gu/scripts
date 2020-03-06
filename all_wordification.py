@@ -1,17 +1,19 @@
 ###
-# filename: number_to_word.py
+# filename: all_wordification.py
 #
+# date: 03-05-20
 # by: Abhay Gupta
 # desc: Converts telephone number to word, outputs all possible words
 ###
 
-def number_to_word(number):
+
+def all_wordification(number):
     """Converts a number to a word"""
 
-    import enchant # English Dictionary
+    import enchant  # English Dictionary
     # from nltk.corpus import words (Alternate word searcher)
-    from itertools import product # Cartesian Product
-    from itertools import combinations # Combination
+    from itertools import product  # Cartesian Product
+    from itertools import combinations  # Combination
 
     # Create a dictionary for number to letter conversion
     alph_num_dict = {'2': ('a', 'b', 'c'),
@@ -23,8 +25,8 @@ def number_to_word(number):
                      '8': ('t', 'u', 'v'),
                      '9': ('w', 'x', 'y', 'z')}
 
-    number = number[6:] # delete area code
-    number = number[:3] + number[4:] # remove hyphen
+    number = number[6:]  # delete area code
+    number = number[:3] + number[4:]  # remove hyphen
 
     word = ""
     all_words = []
@@ -36,43 +38,42 @@ def number_to_word(number):
     prod = []
     for index in range(len(number)):
         if number[index] in ['9', '7']:
-            temp.append([0,1,2,3])
+            temp.append([0, 1, 2, 3])
         else:
-            temp.append([0,1,2])
+            temp.append([0, 1, 2])
 
     for i in product(*temp):
         prod.append((i))
 
-    comb = list(combinations([0, 1, 2, 3, 4, 5, 6, 7], 2)) # Find all inner combination of numbers
+    comb = list(combinations([0, 1, 2, 3, 4, 5, 6, 7], 2))  # Find all inner combination of numbers
 
-    #print(perm[0][1])
+    # print(perm[0][1])
     i = 0
 
-    for i in range(len(prod)): #iterate through all number combos of word
+    for i in range(len(prod)):  # iterate through all number combos of word
 
-        for index in range(len(number)): # iterate through number and convert each number to a letter
+        for index in range(len(number)):  # iterate through number and convert each number to a letter
             p = number[index]
-            word += alph_num_dict[p][int(prod[i][index])] # add letter to word
+            word += alph_num_dict[p][int(prod[i][index])]  # add letter to word
 
-        #if d.check(word): # add new words to list
-            #all_words.append(word)
+        # if d.check(word): # add new words to list
+        # all_words.append(word)
 
-        for j in comb: # iterate through all words/subwords and check if they are real words in dictionary
+        for j in comb:  # iterate through all words/subwords and check if they are real words in dictionary
             temp = word[j[0]:j[1]]
 
-            if d.check(temp): # check if word is an english word
-            #if temp in words.words(): # alternate word searcher
-                temp = number[0:j[0]]+temp+number[j[1]:]
+            if d.check(temp):  # check if word is an english word
+                # if temp in words.words(): # alternate word searcher
+                temp = number[0:j[0]] + temp + number[j[1]:]
                 all_words.append(temp)
-                print(temp)
 
+        word = "" # clear word
 
-        word = ""
+    return (all_words)
 
-    return(all_words)
 
 if __name__ == '__main__':
-    number = '1-800-724-6837' # input number
-    word = number_to_word(number)
+    number = '1-800-724-6837'  # input number
+    word = all_wordification(number)
 
     print(word)
