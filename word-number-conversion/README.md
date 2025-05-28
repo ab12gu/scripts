@@ -1,8 +1,3 @@
-Installation files & scripts that should be used when recovering or starting a new computer. 
-
-# Scripts
-
-Scripts used on computer to generally automate a task
 # Word Number Conversion
 
 This is the coding assessment test for Pickle Robot. It contains three sections relating converting between words and numbers.
