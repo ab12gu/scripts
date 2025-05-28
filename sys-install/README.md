@@ -1,3 +1,5 @@
+Installation files & scripts that should be used when recovering or starting a new computer. 
+
 # Scripts
 
 Scripts used on computer to generally automate a task
