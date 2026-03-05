@@ -1,5 +1,5 @@
 /*
- * filename: script.js
+ * filename: tictactoe.js
  * date creatd: 26/03/03
 */
 
