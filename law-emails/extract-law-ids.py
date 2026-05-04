@@ -10,7 +10,11 @@ def extract_ids(url):
 
 # when a python module is imported, __name__ is set to the module's name (by defualt its __main__)
 if __name__ == '__main__':
-    url = 
+    url = "https://www.mywsba.org/PersonifyEbusiness/LegalDirectory.aspx?"
+        "ShowSearchResults=TRUE&"
+        "LicenseType=Lawyer&EligibleToPractice=Y"
+        "&Status=Activ"
+        "e&AreaOfPractice=Personal+Injury""
     extract_ids(url)
 
 
