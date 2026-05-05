@@ -46,8 +46,9 @@ class Lawyers():
     def parseIDs(self, url, pages):
 
         for page in range(pages+1):
-            url = url + str(page)
-            html = requests.get(url=url)
+            urlpage = url + str(page)
+            html = requests.get(url=urlpage)
+            #print(urlpage)
             htmlparser = HTMLParserIDs()
             htmlparser.feed(html.text)
 
