@@ -62,11 +62,12 @@ class Lawyers():
         with open('lawyer_ids.json', 'r') as f:
             lawyer_ids = json.load(f)
 
-        for ID in lawyer_ids:
+        for i, ID in enumerate(lawyer_ids):
             url = url_lawyer_id + ID
             html = requests.get(url=url)
             htmlparser = HTMLParserEmails()
             htmlparser.feed(html.text)
+            print(i)
 
         with open('lawyer_emails.json', 'w') as f:
             json.dump(htmlparser.container, f)
