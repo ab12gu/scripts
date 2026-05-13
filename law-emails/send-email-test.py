@@ -9,6 +9,7 @@ def send_email(sender, recipient):
     import json
     import os
     from email.message import EmailMessage
+    import time
 
     print("Email sender: ", sender)
     print("Email recipient: ", recipient)
@@ -22,7 +23,8 @@ def send_email(sender, recipient):
 
     with open('lawyer_names.json', 'rb') as jsonfile:
         lawyers_names = json.load(jsonfile)
- 
+    
+    total = 2519
     
     with smtplib.SMTP('smtp.gmail.com', 587) as smtp:
         print(smtp)
@@ -31,10 +33,11 @@ def send_email(sender, recipient):
         smtp.login(sender, key_value)
 
         #for i in range(2):
-        for lawyer_email, lawyer_name in zip(lawyers_emails, lawyers_names):
+        for i, (lawyer_email, lawyer_name) in enumerate(zip(lawyers_emails, lawyers_names)):
+            time.sleep(10)
             recipient = lawyer_email
             #smtp.sendmail(sender, recipient, 'Subject: This is automated\nweird...')
-            print(lawyer_name, recipient)
+            print(i, " of ", total, lawyer_name, recipient)
 
             msg = EmailMessage()
             msg.set_content(
