@@ -17,7 +17,7 @@ def send_email(sender, recipient):
     key_value = os.getenv(key_name)
     #print(key_name + ": " + key_value)
 
-    with open('lawyer_emails.json', 'rb') as jsonfile:
+    with open('lawyers_emails.json', 'rb') as jsonfile:
         lawyers_emails = json.load(jsonfile)
 
     with open('lawyer_names.json', 'rb') as jsonfile:
