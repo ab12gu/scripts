@@ -22,12 +22,41 @@ import requests
 from html.parser import HTMLParser
 import json
 
+
+class HTMLParserNames(HTMLParser):
+    container = []
+    tagfound = False
+    emailfound = True
+    name = ""
+    
+    def handle_starttag(self, tag, attrs):
+        temp = 'dnn_ctr2977_DNNWebControlContainer_ctl00_lblMemberName'
+    
+        # Extract NAME tag
+        attrs = dict(attrs)
+        if 'id' in attrs:
+            if temp == attrs['id']:
+                self.tagfound = True
+        
+        # Store name if email exists
+        if 'href' in attrs:
+            email = attrs['href'].split(":")
+            if email[0] == "mailto":
+                print(self.name)
+                self.container.append(self.name)
+    
+    # Extract Name
+    def handle_data(self, data):
+        if self.tagfound == True:
+            #print(data)
+            self.name = data
+            self.tagfound = False
+
 class HTMLParserEmails(HTMLParser):
     container = []
     
     def handle_starttag(self, tag, attrs):
         attrs = dict(attrs)
-
         if 'href' in attrs:
             email = attrs['href'].split(":")
             if email[0] == "mailto":
@@ -57,20 +86,28 @@ class Lawyers():
         with open('lawyer_ids.json', 'w') as f:
             json.dump(htmlparser.container, f)
 
-    def parseEmails(self, url):
+    def parseEmailsNames(self, url, isEmail):
 
         with open('lawyer_ids.json', 'r') as f:
             lawyer_ids = json.load(f)
 
         for i, ID in enumerate(lawyer_ids):
+            #if i > 4:
+                #continue
             url = url_lawyer_id + ID
             html = requests.get(url=url)
-            htmlparser = HTMLParserEmails()
+            if isEmail:
+                htmlparser = HTMLParserEmails()
+                outfile = 'lawyer_emails.json'
+            else:
+                htmlparser = HTMLParserNames()
+                outfile = 'lawyer_names.json'
             htmlparser.feed(html.text)
             print(i)
 
-        with open('lawyer_emails.json', 'w') as f:
+        with open(outfile, 'w') as f:
             json.dump(htmlparser.container, f)
+
 
 # when a python module is imported, __name__ is set to the module's name (by defualt its __main__)
 if __name__ == '__main__':
@@ -94,7 +131,8 @@ if __name__ == '__main__':
     lawyers = Lawyers()
 
     #lawyers.parseIDs(url_lawyer_search, lawyer_pages)
-    lawyers.parseEmails(url_lawyer_id)
+    #lawyers.parseEmailsNames(url_lawyer_id, True)
+    lawyers.parseEmailsNames(url_lawyer_id, False)
     
 """
 def extract_ids_alt(url_lawyer_search, url_lawyer_id):
