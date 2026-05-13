@@ -45,7 +45,7 @@ class HTMLParserNames(HTMLParser):
             email = attrs['href'].split(":")
             if email[0] == "mailto":
                 print(self.name, ": ", email[1])
-                self.names.append(self.name)
+                self.container.append(self.name)
                 self.emails.append(email[1])
                 self.names_emails[self.name] = email[1]
     
