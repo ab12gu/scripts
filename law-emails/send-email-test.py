@@ -1,6 +1,6 @@
 # filename: send-email-test.py
 # author: Abhay Gupta
-# date creatd: 26-05-11
+# date created: 26-05-11
 #
 
 def send_email(sender, recipient):

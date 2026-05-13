@@ -25,6 +25,8 @@ import json
 
 class HTMLParserNames(HTMLParser):
     container = []
+    emails = []
+    names_emails = {}
     tagfound = False
     emailfound = True
     name = ""
@@ -42,8 +44,10 @@ class HTMLParserNames(HTMLParser):
         if 'href' in attrs:
             email = attrs['href'].split(":")
             if email[0] == "mailto":
-                print(self.name)
-                self.container.append(self.name)
+                print(self.name, ": ", email[1])
+                self.names.append(self.name)
+                self.emails.append(email[1])
+                self.names_emails[self.name] = email[1]
     
     # Extract Name
     def handle_data(self, data):
@@ -108,6 +112,12 @@ class Lawyers():
         with open(outfile, 'w') as f:
             json.dump(htmlparser.container, f)
 
+        if not isEmail:
+            with open('lawyers_names_emails.json', 'w') as f:
+                json.dump(htmlparser.names_emails, f)
+
+            with open('lawyers_emails2.json', 'w') as f:
+                json.dump(htmlparser.emails, f)
 
 # when a python module is imported, __name__ is set to the module's name (by defualt its __main__)
 if __name__ == '__main__':
