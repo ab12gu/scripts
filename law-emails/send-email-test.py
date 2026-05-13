@@ -17,7 +17,7 @@ def send_email(sender, recipient):
     key_value = os.getenv(key_name)
     #print(key_name + ": " + key_value)
 
-    with open('lawyers_emails.json', 'rb') as jsonfile:
+    with open('lawyers_emails2.json', 'rb') as jsonfile:
         lawyers_emails = json.load(jsonfile)
 
     with open('lawyer_names.json', 'rb') as jsonfile:
@@ -38,7 +38,7 @@ def send_email(sender, recipient):
 
             msg = EmailMessage()
             msg.set_content(
-                'Hi,\n\n' + lawyer_name +
+                'Hi ' + lawyer_name + ',' + '\n\n'
                 'I am reaching out to see if I can '
                 'have a consultation on this case?\n'
                 'I was just contacted by a personal '
