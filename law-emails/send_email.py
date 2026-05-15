@@ -70,7 +70,7 @@ def send_email(sender, recipient):
     with open('lawyers_emails.json', 'w') as jsonfile:
         json.dump(lawyers_emails, jsonfile)
 
-    with open('lawyer_names.json', 'w') as jsonfile:
+    with open('lawyers_names.json', 'w') as jsonfile:
         json.dump(lawyers_names, jsonfile)
  
     print('Email Sent!')
